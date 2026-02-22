@@ -4,14 +4,19 @@ import { CreatePersistLockUseCase } from '~/modules/locks/application/use-cases/
 import { GetLockByTicketIdUseCase } from '~/modules/locks/application/use-cases/get-lock-by-ticket-id.use-case';
 import { GetLocksByOwnerIdUseCase } from '~/modules/locks/application/use-cases/get-tickets-by-owner-id.use-case';
 import { LocksController } from '~/modules/locks/presenters/http/locks.controller';
+import { ReleaseByTicketIdUseCase } from '~/modules/locks/application/use-cases/release-by-ticket-id.use-case';
 
 @Module({
   controllers: [LocksController],
   providers: [
-    LockFactory,
+    // Use-cases
     CreatePersistLockUseCase,
     GetLockByTicketIdUseCase,
     GetLocksByOwnerIdUseCase,
+    ReleaseByTicketIdUseCase,
+
+    // Factories
+    LockFactory,
   ],
 })
 export class LocksModule {

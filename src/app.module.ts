@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { LocksModule } from './modules/locks/application/locks.module';
+import { LocksModule } from './modules/locks/locks.module';
 import { CoreModule } from '~/core/core/core.module';
 import { ApplicationBootstrapOptions } from '~/common/interfaces/application-bootstrap-options.interface';
 import { LocksInfrastructureModule } from '~/modules/locks/infrastructure/locks-infrastructure.module';

@@ -1,7 +1,7 @@
 import { ApiForbiddenResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { HttpStatus } from '@nestjs/common';
 
-export const ForbiddenSwaggerResponse = () =>
+export const ForbiddenSwaggerResponse = (path: string) =>
   ApiForbiddenResponse({
     description: 'Недостаточно прав для запроса',
     schema: {
@@ -10,12 +10,12 @@ export const ForbiddenSwaggerResponse = () =>
         statusCode: HttpStatus.FORBIDDEN,
         message: 'У вас недостаточно прав для выполнения этого действия',
         timestamp: '2025-10-28T11:44:41.107Z',
-        path: 'api/test-url',
+        path,
       },
     },
   });
 
-export const UnauthorizedSwaggerResponse = () =>
+export const UnauthorizedSwaggerResponse = (path: string) =>
   ApiUnauthorizedResponse({
     description: 'Некорректные данные входа',
     schema: {
@@ -24,7 +24,7 @@ export const UnauthorizedSwaggerResponse = () =>
         statusCode: HttpStatus.UNAUTHORIZED,
         message: 'Получены некорректные данные юзера и ключ',
         timestamp: '2025-11-18T10:43:08.845Z',
-        path: 'api/test-url',
+        path,
       },
     },
   });

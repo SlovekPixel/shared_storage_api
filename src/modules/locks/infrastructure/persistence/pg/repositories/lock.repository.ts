@@ -5,6 +5,7 @@ import { LockEntity } from '~/modules/locks/infrastructure/persistence/pg/entiti
 import { Repository } from 'typeorm';
 import { Lock } from '~/modules/locks/domain/lock';
 import { LockMapper } from '~/modules/locks/infrastructure/persistence/pg/mappers/lock.mapper';
+import { LockOperationStatuses } from '~/modules/locks/application/constants/lock-operation-statuses';
 
 @Injectable()
 export class PgLockRepository implements LockRepository {
@@ -40,14 +41,23 @@ export class PgLockRepository implements LockRepository {
     return LockMapper.toDomain(newEntity);
   }
 
-  async releaseTicketById(ticketId: string): Promise<void> {
-    const result = await this.lockRepository.delete({ ticket: ticketId });
+  async releaseByTicketId(
+    ticketId: string,
+    owner?: string,
+  ): Promise<LockOperationStatuses> {
+    if (owner) {
+      const lock = await this.findByTicketId(ticketId);
 
-    if (result.affected === 0)
-      throw new NotFoundException(
-        `Блокировка с идентификатором "${ticketId}" не найдена`,
-      );
+      if (lock.owner !== owner) return LockOperationStatuses.OWNER_MISMATCH;
+    }
 
-    return;
+    const result = await this.lockRepository.delete({
+      ticket: ticketId,
+      owner: owner,
+    });
+
+    if (result.affected === 0) return LockOperationStatuses.NOT_FOUND;
+
+    return LockOperationStatuses.SUCCESS;
   }
 }

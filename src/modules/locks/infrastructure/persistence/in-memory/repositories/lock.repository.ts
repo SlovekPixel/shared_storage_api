@@ -4,6 +4,7 @@ import { Lock } from '~/modules/locks/domain/lock';
 import { LockEntity } from '~/modules/locks/infrastructure/persistence/in-memory/entities/lock.entity';
 import { LockMapper } from '~/modules/locks/infrastructure/persistence/in-memory/mappers/lock.mapper';
 import { ErrorWithDetails } from '~/common/errors/error-with-details';
+import { LockOperationStatuses } from '~/modules/locks/application/constants/lock-operation-statuses';
 
 @Injectable()
 export class InMemoryLockRepository implements LockRepository {
@@ -41,14 +42,21 @@ export class InMemoryLockRepository implements LockRepository {
     return LockMapper.toDomain(newEntity);
   }
 
-  async releaseTicketById(ticketId: string): Promise<void> {
+  async releaseByTicketId(
+    ticketId: string,
+    owner?: string,
+  ): Promise<LockOperationStatuses> {
+    if (owner) {
+      const currentLock = await this.findByTicketId(ticketId);
+
+      if (currentLock.owner !== owner)
+        return LockOperationStatuses.OWNER_MISMATCH;
+    }
+
     const wasDeleted = this.locks.delete(ticketId);
 
-    if (!wasDeleted)
-      throw new NotFoundException(
-        `Блокировка с идентификатором "${ticketId}" не найдена`,
-      );
+    if (!wasDeleted) return LockOperationStatuses.NOT_FOUND;
 
-    return;
+    return LockOperationStatuses.SUCCESS;
   }
 }
