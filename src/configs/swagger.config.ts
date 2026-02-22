@@ -19,6 +19,16 @@ export const swaggerConfig = new DocumentBuilder()
     },
     'api-key',
   )
+  .addGlobalParameters({
+    name: 'accept-language',
+    in: 'header',
+    required: false,
+    schema: {
+      type: 'string',
+      example: 'en',
+    },
+    description: 'Язык локализации ответа (ISO code)',
+  })
   .addSecurityRequirements('user-name')
   .addSecurityRequirements('api-key')
   .build();

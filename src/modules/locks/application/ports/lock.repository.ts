@@ -1,5 +1,4 @@
 import { Lock } from '~/modules/locks/domain/lock';
-import { LockOperationStatuses } from '~/modules/locks/application/constants/lock-operation-statuses';
 
 export abstract class LockRepository {
   /**
@@ -34,8 +33,5 @@ export abstract class LockRepository {
    * @param ticketId - Идентификатор записи
    * @param owner - (опционально) Идентификатор владельца
    */
-  abstract releaseByTicketId(
-    ticketId: string,
-    owner?: string,
-  ): Promise<LockOperationStatuses>;
+  abstract releaseByTicketId(ticketId: string, owner?: string): Promise<void>;
 }

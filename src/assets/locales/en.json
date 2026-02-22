@@ -1,0 +1,7 @@
+{
+  "ERRORS": {
+    "OWNER_MISMATCH": "You do not have permissions to perform this action",
+    "NOT_FOUND_BY_TICKET_ID": "Lock with ID {ticketId} not found",
+    "CREATE_LOCK_FAILED": "Failed to create lock"
+  }
+}
