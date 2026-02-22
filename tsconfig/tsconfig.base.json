@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Base",
+  "compilerOptions": {
+    // Basic
+    "target": "ESNext", // Определяет версию ECMAScript, к которой будет транслироваться код.
+    "module": "ESNext", // Определяет формат модулей, используемых в выходных файлах.
+    "moduleResolution": "Bundler", // Определяет стратегию разрешения модулей (подходит для использования с инструментами сборки).
+
+    // Output
+    "declaration": true, // Генерация .d.ts файлов для TypeScript модулей.
+    "declarationMap": true, // Генерация sourcemap для декларационных файлов.
+    "noEmit": true, // Отключает генерацию выходных файлов.
+    "noEmitOnError": true, // Не генерировать выходные файлы при наличии ошибок компиляции.
+    "inlineSources": false, // Включает исходные файлы в sourcemap.
+    "preserveWatchOutput": true, // Сохраняет вывод компиляции в режиме watch.
+
+    // Strict Type-Checking
+    "strict": true, // Включает все строгие проверки.
+    "alwaysStrict": true, // Включает строгий режим для всех файлов.
+    "noImplicitAny": true, // Запрещает неявное использование типа any.
+    "noUnusedLocals": true, // Ошибка при наличии неиспользуемых локальных переменных.
+    "noUnusedParameters": true, // Ошибка при наличии неиспользуемых параметров функций.
+    "noImplicitReturns": true, // Ошибка, если в функции неявно возвращается undefined.
+    "noUncheckedIndexedAccess": true, // Включает строгую проверку доступа по индексам.
+    "noFallthroughCasesInSwitch": true, // Ошибка при падении через case в switch.
+    "preserveConstEnums": true, // Сохраняет const enums в выходных файлах.
+    "strictNullChecks": true, // Строгая проверка null и undefined
+
+    // Module Resolution
+    "resolveJsonModule": false, // Разрешает импорт JSON модулей.
+    "allowSyntheticDefaultImports": true, // Разрешает импорт по умолчанию из модулей без экспорта по умолчанию.
+    "esModuleInterop": true, // Включает совместимость с CommonJS модулями.
+    "forceConsistentCasingInFileNames": true, // Требует согласованного использования регистра в именах файлов.
+    "isolatedModules": true, // Проверяет каждый файл как отдельный модуль.
+
+    // Experimental
+    "experimentalDecorators": true, // Включает поддержку экспериментальных декораторов.
+
+    "incremental": true, // Включает инкрементальную компиляцию для ускорения повторных сборок.
+    "newLine": "lf", // Определяет символ новой строки в выходных файлах.
+    "pretty": true, // Включает красивый вывод ошибок компиляции.
+    "skipLibCheck": true, // Пропускает проверку типов в библиотеках.
+
+    "importHelpers": true // Вспомогательные функции импортируются из модуля tslib.
+  },
+  "exclude": ["node_modules", "dist", "build"]
+}

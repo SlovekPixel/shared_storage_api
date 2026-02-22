@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "declarationMap": false,
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "types": [
+      "node",
+      "vite",
+      "vite/client",
+      "vitest",
+      "vitest/globals",
+      "@types/multer"
+    ],
+    "sourceMap": true
+  }
+}
