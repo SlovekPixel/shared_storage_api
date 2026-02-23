@@ -1,7 +1,6 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
-  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
@@ -23,15 +22,6 @@ export const PersistLockSwagger = () => {
       description: 'Некорректное тело запроса',
       example: {
         statusCode: HttpStatus.BAD_REQUEST,
-        timestamp: '2026-02-22T14:24:26.439Z',
-        path,
-        message: ['ticketId: Неверный UUID'],
-      },
-    }),
-    ApiNotFoundResponse({
-      description: 'Блокировка не найдена',
-      example: {
-        statusCode: HttpStatus.NOT_FOUND,
         timestamp: '2026-02-22T14:24:26.439Z',
         path,
         message: ['ticketId: Неверный UUID'],

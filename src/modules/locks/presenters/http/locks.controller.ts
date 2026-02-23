@@ -18,12 +18,14 @@ import { CreateReleaseLockDto } from '~/modules/locks/presenters/http/dto/create
 import { ReleaseByTicketIdUseCase } from '~/modules/locks/application/use-cases/release-by-ticket-id.use-case';
 import { OwnerDto, ticketDto } from '~/common/schemas';
 import { ApiTags } from '@nestjs/swagger';
-import { ShowLockByTicketIdSwagger } from '~/modules/locks/presenters/http/swagger/show-lock-by-ticket-id.swagger';
-import { ShowLocksByOwnerIdSwagger } from '~/modules/locks/presenters/http/swagger/show-locks-by-owner-id.swagger';
-import { ReleaseLockSwagger } from '~/modules/locks/presenters/http/swagger/release-lock.swagger';
-import { PersistLockSwagger } from '~/modules/locks/presenters/http/swagger/persist-lock.swagger';
 import { LocksControllerPort } from '~/modules/locks/application/ports/locks.controller.port';
 import { CreateReleaseLockCommand } from '~/modules/locks/application/commands/create-release-lock.command';
+import {
+  PersistLockSwagger,
+  ReleaseLockSwagger,
+  ShowLockByTicketIdSwagger,
+  ShowLocksByOwnerIdSwagger,
+} from '~/modules/locks/presenters/http/swagger';
 
 @ApiTags('Lock')
 @Controller('locks')

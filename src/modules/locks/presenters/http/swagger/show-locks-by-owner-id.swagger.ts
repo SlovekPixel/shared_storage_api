@@ -29,7 +29,7 @@ export const ShowLocksByOwnerIdSwagger = () => {
       },
     }),
     ApiNotFoundResponse({
-      description: 'Блокировка не найдена',
+      description: 'Клиент не найден',
       example: {
         statusCode: HttpStatus.NOT_FOUND,
         timestamp: '2026-02-22T14:24:26.439Z',
