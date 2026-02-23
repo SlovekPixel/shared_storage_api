@@ -14,7 +14,7 @@ import { GetLockByTicketIdUseCase } from '~/modules/locks/application/use-cases/
 import { GetLocksByOwnerIdUseCase } from '~/modules/locks/application/use-cases/get-tickets-by-owner-id.use-case';
 import { Lock } from '~/modules/locks/domain/lock';
 import { CreatePersistLockDto } from '~/modules/locks/presenters/http/dto/create-persist-lock.dto';
-import { ReleaseLockDto } from '~/modules/locks/presenters/http/dto/release-lock.dto';
+import { CreateReleaseLockDto } from '~/modules/locks/presenters/http/dto/create-release-lock.dto';
 import { ReleaseByTicketIdUseCase } from '~/modules/locks/application/use-cases/release-by-ticket-id.use-case';
 import { OwnerDto, ticketDto } from '~/common/schemas';
 import { ApiTags } from '@nestjs/swagger';
@@ -22,10 +22,12 @@ import { ShowLockByTicketIdSwagger } from '~/modules/locks/presenters/http/swagg
 import { ShowLocksByOwnerIdSwagger } from '~/modules/locks/presenters/http/swagger/show-locks-by-owner-id.swagger';
 import { ReleaseLockSwagger } from '~/modules/locks/presenters/http/swagger/release-lock.swagger';
 import { PersistLockSwagger } from '~/modules/locks/presenters/http/swagger/persist-lock.swagger';
+import { LocksControllerPort } from '~/modules/locks/application/ports/locks.controller.port';
+import { CreateReleaseLockCommand } from '~/modules/locks/application/commands/create-release-lock.command';
 
 @ApiTags('Lock')
 @Controller('locks')
-export class LocksController {
+export class LocksHttpController implements LocksControllerPort {
   constructor(
     private readonly createPersistLock: CreatePersistLockUseCase,
     private readonly getLockByTicketId: GetLockByTicketIdUseCase,
@@ -52,19 +54,23 @@ export class LocksController {
   ): Promise<Lock> {
     return this.createPersistLock.execute(
       new CreatePersistLockCommand(
-        createPersistLock.owner,
-        createPersistLock.ticket,
+        createPersistLock.ownerId,
+        createPersistLock.ticketId,
       ),
     );
   }
 
   @ReleaseLockSwagger()
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete('tickets/:ticketId')
+  @HttpCode(HttpStatus.OK)
+  @Delete('release')
   async releaseLock(
-    @Param() params: ticketDto,
-    @Body() releaseLock: ReleaseLockDto,
-  ): Promise<void> {
-    return this.releaseByTicketId.execute(params.ticketId, releaseLock.owner);
+    @Body() createReleaseLock: CreateReleaseLockDto,
+  ): Promise<Lock> {
+    return this.releaseByTicketId.execute(
+      new CreateReleaseLockCommand(
+        createReleaseLock.ticketId,
+        createReleaseLock.ownerId,
+      ),
+    );
   }
 }

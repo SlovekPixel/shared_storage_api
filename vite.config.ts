@@ -9,7 +9,8 @@ dotenv.config({ override: true, path: '.env' });
 
 const {
   PORT = '3022',
-  ENABLE_SWAGGER = 'false',
+  ENABLE_SWAGGER = 'true',
+  TRANSPORT = 'http',
   DB_REAL_TIME_LOCKS = 'in-memory',
 } = process.env;
 
@@ -36,6 +37,7 @@ const configFunction: UserConfigFnObject = ({ mode }) => {
   const viteConfig: UserConfig = {
     define: {
       ENABLE_SWAGGER: JSON.stringify(ENABLE_SWAGGER === 'true'),
+      TRANSPORT: JSON.stringify(TRANSPORT),
       DB_REAL_TIME_LOCKS: JSON.stringify(DB_REAL_TIME_LOCKS),
     },
     server: {

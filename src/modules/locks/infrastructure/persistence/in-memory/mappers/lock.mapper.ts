@@ -9,14 +9,14 @@ export class LockMapper {
       lockEntity.createdAt,
     );
 
-    return new Lock(lockEntity.owner, lockEntity.ticket, lockExtended);
+    return new Lock(lockEntity.ownerId, lockEntity.ticketId, lockExtended);
   }
 
   static toPersistence(lock: Lock): LockEntity {
     const entity = new LockEntity();
 
-    entity.owner = lock.owner;
-    entity.ticket = lock.ticket;
+    entity.ownerId = lock.ownerId;
+    entity.ticketId = lock.ticketId;
     entity.lifetime = lock.extended.lifetime;
     entity.createdAt = lock.extended.createdAt;
 

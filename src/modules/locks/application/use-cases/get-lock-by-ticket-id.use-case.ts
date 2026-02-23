@@ -6,7 +6,7 @@ import { Lock } from '~/modules/locks/domain/lock';
 export class GetLockByTicketIdUseCase {
   constructor(private readonly lockRepository: LockRepository) {}
 
-  async execute(ticket: string): Promise<Lock> {
-    return this.lockRepository.findByTicketId(ticket);
+  async execute(ticketId: string): Promise<Lock> {
+    return this.lockRepository.findByTicketId(ticketId);
   }
 }

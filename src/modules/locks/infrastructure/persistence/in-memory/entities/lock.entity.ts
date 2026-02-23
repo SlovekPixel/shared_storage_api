@@ -1,6 +1,6 @@
 export class LockEntity {
-  ticket!: string;
-  owner!: string;
-  lifetime: number | undefined;
+  ticketId!: string;
+  ownerId!: string;
+  lifetime!: number | null;
   createdAt!: number;
 }

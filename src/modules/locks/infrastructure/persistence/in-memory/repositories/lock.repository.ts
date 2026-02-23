@@ -29,19 +29,19 @@ export class InMemoryLockRepository implements LockRepository {
     return LockMapper.toDomain(entity);
   }
 
-  async findByOwner(owner: string): Promise<Lock[]> {
+  async findByOwner(ownerId: string): Promise<Lock[]> {
     const entities = Array.from(this.locks.values());
 
     return entities
-      .filter((item) => item.owner === owner)
+      .filter((item) => item.ownerId === ownerId)
       .map((item) => LockMapper.toDomain(item));
   }
 
   async createPersistLock(lock: Lock): Promise<Lock> {
     const persistenceModel = LockMapper.toPersistence(lock);
-    this.locks.set(persistenceModel.ticket, persistenceModel);
+    this.locks.set(persistenceModel.ticketId, persistenceModel);
 
-    const newEntity = this.locks.get(persistenceModel.ticket);
+    const newEntity = this.locks.get(persistenceModel.ticketId);
 
     if (!newEntity)
       throw new ErrorWithDetails({
@@ -51,15 +51,13 @@ export class InMemoryLockRepository implements LockRepository {
     return LockMapper.toDomain(newEntity);
   }
 
-  async releaseByTicketId(ticketId: string, owner?: string): Promise<void> {
-    if (owner) {
-      const currentLock = await this.findByTicketId(ticketId);
+  async releaseByTicketId(ticketId: string, ownerId?: string): Promise<Lock> {
+    const currentLock = await this.findByTicketId(ticketId);
 
-      if (currentLock.owner !== owner)
-        throw new ForbiddenException(
-          this.i18nService.translate('ERRORS.OWNER_MISMATCH'),
-        );
-    }
+    if (ownerId && currentLock.ownerId !== ownerId)
+      throw new ForbiddenException(
+        this.i18nService.translate('ERRORS.OWNER_MISMATCH'),
+      );
 
     const wasDeleted = this.locks.delete(ticketId);
 
@@ -70,6 +68,6 @@ export class InMemoryLockRepository implements LockRepository {
         }),
       );
 
-    return;
+    return currentLock;
   }
 }

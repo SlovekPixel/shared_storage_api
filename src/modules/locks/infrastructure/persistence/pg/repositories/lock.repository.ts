@@ -21,7 +21,7 @@ export class PgLockRepository implements LockRepository {
 
   async findByTicketId(ticketId: string): Promise<Lock> {
     const entity = await this.lockRepository.findOne({
-      where: { ticket: ticketId },
+      where: { ticketId: ticketId },
     });
 
     if (!entity)
@@ -34,9 +34,9 @@ export class PgLockRepository implements LockRepository {
     return LockMapper.toDomain(entity);
   }
 
-  async findByOwner(owner: string): Promise<Lock[]> {
+  async findByOwner(ownerId: string): Promise<Lock[]> {
     const entities = await this.lockRepository.find({
-      where: { owner },
+      where: { ownerId },
     });
 
     return entities.map((item) => LockMapper.toDomain(item));
@@ -49,19 +49,17 @@ export class PgLockRepository implements LockRepository {
     return LockMapper.toDomain(newEntity);
   }
 
-  async releaseByTicketId(ticketId: string, owner?: string): Promise<void> {
-    if (owner) {
-      const lock = await this.findByTicketId(ticketId);
+  async releaseByTicketId(ticketId: string, ownerId?: string): Promise<Lock> {
+    const currentLock = await this.findByTicketId(ticketId);
 
-      if (lock.owner !== owner)
-        throw new ForbiddenException(
-          this.i18nService.translate('ERRORS.OWNER_MISMATCH'),
-        );
-    }
+    if (ownerId && currentLock.ownerId !== ownerId)
+      throw new ForbiddenException(
+        this.i18nService.translate('ERRORS.OWNER_MISMATCH'),
+      );
 
     const result = await this.lockRepository.delete({
-      ticket: ticketId,
-      owner: owner,
+      ticketId,
+      ownerId,
     });
 
     if (result.affected === 0)
@@ -71,6 +69,6 @@ export class PgLockRepository implements LockRepository {
         }),
       );
 
-    return;
+    return currentLock;
   }
 }

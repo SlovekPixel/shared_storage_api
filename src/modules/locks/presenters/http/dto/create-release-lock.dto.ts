@@ -2,11 +2,11 @@ import { z } from 'zod';
 import { ownerSchema, ticketSchema } from '~/common/schemas';
 import { createZodDto } from 'nestjs-zod';
 
-const CreatePersistLockSchema = z.object({
+const CreateReleaseLockSchema = z.object({
   ownerId: ownerSchema,
   ticketId: ticketSchema,
 });
 
-export class CreatePersistLockDto extends createZodDto(
-  CreatePersistLockSchema,
+export class CreateReleaseLockDto extends createZodDto(
+  CreateReleaseLockSchema,
 ) {}

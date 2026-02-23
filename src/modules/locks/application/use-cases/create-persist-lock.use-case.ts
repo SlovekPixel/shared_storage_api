@@ -15,8 +15,8 @@ export class CreatePersistLockUseCase {
     createPersisLockCommand: CreatePersistLockCommand,
   ): Promise<Lock> {
     const lock = this.lockFactory.create(
-      createPersisLockCommand.owner,
-      createPersisLockCommand.ticket,
+      createPersisLockCommand.ownerId,
+      createPersisLockCommand.ticketId,
     );
 
     return this.lockRepository.createPersistLock(lock);

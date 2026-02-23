@@ -12,10 +12,10 @@ export abstract class LockRepository {
   /**
    * Найти все блокировки, принадлежащие владельцу
    *
-   * @param owner - Идентификатор владельца
+   * @param ownerId - Идентификатор владельца
    * @returns Массив блокировок
    */
-  abstract findByOwner(owner: string): Promise<Lock[]>;
+  abstract findByOwner(ownerId: string): Promise<Lock[]>;
 
   /**
    * Создать и сохранить новую постоянную блокировку
@@ -28,10 +28,10 @@ export abstract class LockRepository {
   /**
    * Освободить блокировку по идентификатору записи
    *
-   * Если указан owner, освобождение произойдёт только при совпадении владельца
+   * Если указан ownerId, освобождение произойдёт только при совпадении владельца
    *
    * @param ticketId - Идентификатор записи
-   * @param owner - (опционально) Идентификатор владельца
+   * @param ownerId - (опционально) Идентификатор владельца
    */
-  abstract releaseByTicketId(ticketId: string, owner?: string): Promise<void>;
+  abstract releaseByTicketId(ticketId: string, ownerId?: string): Promise<Lock>;
 }

@@ -3,13 +3,13 @@ import { LockFactory } from '~/modules/locks/domain/factories/lock.factory';
 import { CreatePersistLockUseCase } from '~/modules/locks/application/use-cases/create-persist-lock.use-case';
 import { GetLockByTicketIdUseCase } from '~/modules/locks/application/use-cases/get-lock-by-ticket-id.use-case';
 import { GetLocksByOwnerIdUseCase } from '~/modules/locks/application/use-cases/get-tickets-by-owner-id.use-case';
-import { LocksController } from '~/modules/locks/presenters/http/locks.controller';
+import { LocksHttpController } from '~/modules/locks/presenters/http/locks.controller';
 import { ReleaseByTicketIdUseCase } from '~/modules/locks/application/use-cases/release-by-ticket-id.use-case';
 import { I18nModule } from '~/core/i18n/i18n.module';
 
 @Module({
   imports: [I18nModule],
-  controllers: [LocksController],
+  controllers: [LocksHttpController],
   providers: [
     // Use-cases
     CreatePersistLockUseCase,

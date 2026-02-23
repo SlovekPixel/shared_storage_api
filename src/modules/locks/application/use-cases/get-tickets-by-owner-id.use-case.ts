@@ -6,7 +6,7 @@ import { Lock } from '~/modules/locks/domain/lock';
 export class GetLocksByOwnerIdUseCase {
   constructor(private readonly lockRepository: LockRepository) {}
 
-  async execute(owner: string): Promise<Lock[]> {
-    return this.lockRepository.findByOwner(owner);
+  async execute(ownerId: string): Promise<Lock[]> {
+    return this.lockRepository.findByOwner(ownerId);
   }
 }

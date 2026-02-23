@@ -1,11 +1,12 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
-  ApiNoContentResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
 import { DefaultErrorsSwaggerResponse } from '~/common/http/swagger';
+import { LockDto } from '~/modules/locks/presenters/http/dto/lock.dto';
 
 const path = '/locksk';
 
@@ -14,8 +15,9 @@ export const ReleaseLockSwagger = () => {
     ApiOperation({
       summary: 'Разблокировать запись по идентификатору',
     }),
-    ApiNoContentResponse({
+    ApiOkResponse({
       description: 'Блокировка успешно снята',
+      type: LockDto,
     }),
     ApiBadRequestResponse({
       description: 'Некорректное тело запроса',

@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package lock;
+
+service LockService {
+  rpc ShowLockByTicketId (ShowLockByTicketIdRequest) returns (LockResponse) {}
+  rpc ShowLocksByOwnerId (ShowLocksByOwnerIdRequest) returns (LockListResponse) {}
+  rpc PersistLock (PersistLockRequest) returns (LockResponse) {}
+  rpc ReleaseLock (ReleaseLockRequest) returns (LockResponse) {}
+}
+
+message LockExtended {
+  optional int32 lifetime = 1;
+  int32 createdAt = 10;
+}
+
+message LockResponse {
+  string ownerId = 1;
+  string ticketId = 2;
+  LockExtended extended = 10;
+}
+
+message LockListResponse {
+  repeated LockResponse locks = 1;
+}
+
+message ShowLockByTicketIdRequest {
+  string ticketId = 1;
+}
+
+message ShowLocksByOwnerIdRequest {
+  string ownerId = 1;
+}
+
+message PersistLockRequest {
+  string ownerId = 1;
+  string ticketId = 2;
+}
+
+message ReleaseLockRequest {
+  string ownerId = 1;
+  string ticketId = 2;
+}

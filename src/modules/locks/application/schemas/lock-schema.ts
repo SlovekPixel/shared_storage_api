@@ -15,7 +15,7 @@ const ExtendedLockSchema: z.ZodType<LockExtended> = z.object({
 });
 
 export const LockSchema: z.ZodType<Lock> = z.object({
-  owner: ownerSchema,
-  ticket: ticketSchema,
+  ownerId: ownerSchema,
+  ticketId: ticketSchema,
   extended: ExtendedLockSchema,
 });

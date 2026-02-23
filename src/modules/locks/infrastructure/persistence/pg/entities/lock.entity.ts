@@ -3,13 +3,13 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
 @Entity('locks')
 export class LockEntity {
   @PrimaryColumn('uuid')
-  ticket!: string;
+  ticketId!: string;
 
   @Column()
-  owner!: string;
+  ownerId!: string;
 
   @Column()
-  lifetime: number | undefined;
+  lifetime!: number | null;
 
   @CreateDateColumn()
   createdAt!: number;
